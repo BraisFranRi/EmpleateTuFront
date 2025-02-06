@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Offer } from "../models/Offer"
+import  Offer  from "../models/Offer"
 import { OfferService } from "../services/offer.service"
 import { Link } from "react-router-dom"
 

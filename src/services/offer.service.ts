@@ -1,18 +1,36 @@
+import Offer from "../models/Offer"
+import { fetchAPI } from "../utils/fetchAPI"
+const API_URL_BASE = import.meta.env.VITE_API_URL_BASE
+
 export class OfferService{
     static async getAll(){
-        try{
-            const response = await fetch('http://localhost:3000/api/offers')
-            
-            if(!response.ok) {
-                const errorData = await response.json().catch(()=>null)
-                throw new Error(errorData?.message || 'Error inesperado')
-            }
-            
-            return await response.json()
-        }catch(error){
-            const msg = error instanceof Error ? error.message : 'Error inesperado'
-            throw new Error(msg)
-        }
+       return await fetchAPI(API_URL_BASE+'/offers')
+    }
+
+    static async getById(id:number){
+        return await fetchAPI(API_URL_BASE+'/offers/'+id)
+    }
+
+    static async create(offer:Partial<Offer>){
+        return await fetchAPI(API_URL_BASE+'/offers',{
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(offer),
+            credentials: 'include'
+        })
+    }
+
+    static async update(id:number, offer:Partial<Offer>){
+        return await fetchAPI(API_URL_BASE+'/offers/'+id,{
+            method: 'PUT',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(offer),
+            credentials: 'include'
+        })
     }
 }
 
